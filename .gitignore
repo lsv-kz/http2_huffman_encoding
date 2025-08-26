@@ -1,0 +1,6 @@
+
+class/test/objs/*.o
+class/test/test
+
+non-class/test/objs/*.o
+non-class/test/test
