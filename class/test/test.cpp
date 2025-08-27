@@ -80,15 +80,20 @@ int main(int count, char *strings[])
         fflush(stdout);
         std_in(s, sizeof(s));
         //--------------------------------------------------------------
+        fprintf(stdout, "input string size %d bytes\n", (int)strlen(s));
+    gettimeofday(&time1, NULL);
         huff.encode(s, buf);
+    get_time(&time1, "encode time");
+        fprintf(stdout, "output size=%d\n", buf.size());
         hex_print_stderr("encode", buf.ptr(), buf.size());
 
-gettimeofday(&time1, NULL);
+    gettimeofday(&time1, NULL);
         huff.decode(buf.ptr(), buf.size(), str);
-get_time(&time1, "decode time");
+    get_time(&time1, "decode time");
 
         fprintf(stdout, "decode:\n [%s]\n", s);
         fprintf(stdout, " [%s]\n", str.c_str());
+        hex_print_stderr("decode hex", str.c_str(), str.size());
     }
 
     return 0;
