@@ -23,7 +23,7 @@ void std_in(char *s, int len)
         while ((ch = getchar()) != '\n');
 }
 //======================================================================
-void get_time(struct timeval *time1, const char *s)
+void get_time(struct timeval *time1, char *s, int size)
 {
     unsigned long ts12, tu12;
     struct timeval time2;
@@ -41,7 +41,7 @@ void get_time(struct timeval *time1, const char *s)
         ts12 = time2.tv_sec - time1->tv_sec;
     }
 
-    fprintf(stderr, "%s: %lu.%06lu sec\n", s, ts12, tu12);
+    snprintf(s, size, "%lu.%06lu sec", ts12, tu12);
 }
 //======================================================================
 void hex_print_stderr(const char *s, const void *p, int n)
@@ -71,7 +71,7 @@ int main(int count, char *strings[])
 {
     ByteArray buf;
     struct timeval time1;
-    char s[4096];
+    char s[4096], s1[64], s2[64];
     string str;
     str.reserve(128);
 
@@ -85,17 +85,20 @@ int main(int count, char *strings[])
         fprintf(stdout, "input string size %d bytes\n", (int)strlen(s));
     gettimeofday(&time1, NULL);
         huffman_encode(s, buf);
-    get_time(&time1, "encode time");
+    get_time(&time1, s1, sizeof(s1));
         fprintf(stdout, "output size=%d\n", buf.size());
         hex_print_stderr("encode", buf.ptr(), buf.size());
 
     gettimeofday(&time1, NULL);
         huffman_decode(buf.ptr(), buf.size(), str);
-    get_time(&time1, "decode time");
+    get_time(&time1, s2, sizeof(s2));
 
         fprintf(stdout, "decode:\n [%s]\n", s);
         fprintf(stdout, " [%s]\n", str.c_str());
         hex_print_stderr("decode hex", str.c_str(), str.size());
+        
+        fprintf(stdout, "encose time: %s\n", s1);
+        fprintf(stdout, "decode time: %s\n", s2);
     }
 
     return 0;
