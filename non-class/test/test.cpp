@@ -6,7 +6,7 @@
 
 using namespace std;
 //======================================================================
-void huffman_decode(const char *s, int len, std::string& out);
+int huffman_decode(const char *s, int len, std::string& out);
 int huffman_encode(const char *in, ByteArray& out);
 //======================================================================
 void std_in(char *s, int len)
@@ -73,7 +73,8 @@ int main(int count, char *strings[])
     struct timeval time1;
     char s[4096], s1[64], s2[64];
     string str;
-    str.reserve(128);
+    str.reserve(1024);
+    buf.reserve(1024);
 
     while (true)
     {
@@ -90,11 +91,11 @@ int main(int count, char *strings[])
         hex_print_stderr("encode", buf.ptr(), buf.size());
 
     gettimeofday(&time1, NULL);
-        huffman_decode(buf.ptr(), buf.size(), str);
+        int ret = huffman_decode(buf.ptr(), buf.size(), str);
     get_time(&time1, s2, sizeof(s2));
 
-        fprintf(stdout, "decode:\n [%s]\n", s);
-        fprintf(stdout, " [%s]\n", str.c_str());
+        fprintf(stdout, "decode:\n [%s] ret=%d\n", str.c_str(), ret);
+        fprintf(stdout, " [%s]\n", s);
         hex_print_stderr("decode hex", str.c_str(), str.size());
         
         fprintf(stdout, "encose time: %s\n", s1);

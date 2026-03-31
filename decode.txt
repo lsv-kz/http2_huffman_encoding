@@ -1,0 +1,324 @@
+
+  |--- index in huffman_decode_table
+  |    |---- character code
+  |    |                                         |-- size
+  |    |                                         |
+  |    |     if (in < 0x50000000)                |
+  |    |     index: (in >> 27)                   |
+(000) (048)  00000xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  (0x00000000 - 0x07ffffff) < 0x50000000   
+(001) (049)  00001xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  
+(002) (050)  00010xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  
+(003) (097)  00011xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  
+(004) (099)  00100xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  
+(005) (101)  00101xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]   
+(006) (105)  00110xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  
+(007) (111)  00111xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  
+(008) (115)  01000xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  
+(009) (116)  01001xxxxxxxxxxxxxxxxxxxxxxxxxxx   [5]  (0x48000000 - 0x4fffffff) < 0x50000000  
+
+
+             if (in < 0xb8000000)
+             index: (in >> 26) - 10; 
+(010) (032)  010100xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]  (0x50000000 - 0x53ffffff) < 0xb8000000  
+(011) (037)  010101xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(012) (045)  010110xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]            
+(013) (046)  010111xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]            
+(014) (047)  011000xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(015) (051)  011001xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]  
+(016) (052)  011010xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]            
+(017) (053)  011011xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]            
+(018) (054)  011100xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]
+(019) (055)  011101xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]
+(020) (056)  011110xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]  
+(021) (057)  011111xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]
+(022) (061)  100000xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]
+(023) (065)  100001xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]
+(024) (095)  100010xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(025) (098)  100011xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(026) (100)  100100xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(027) (102)  100101xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]          
+(028) (103)  100110xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(029) (104)  100111xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(030) (108)  101000xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(031) (109)  101001xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]          
+(032) (110)  101010xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]           
+(033) (112)  101011xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]            
+(034) (114)  101100xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]  (0xb0000000 - 0xb3ffffff)         
+(035) (117)  101101xxxxxxxxxxxxxxxxxxxxxxxxxx   [6]  (0xb4000000 - 0xb7ffffff) < 0xb8000000  
+
+             if (in < 0xf8000000)
+             index: ((in >> 25) & 0x3f) + 8;
+(036) (058)  1011100xxxxxxxxxxxxxxxxxxxxxxxxx   [7]  (0xb8000000 - 0xb9ffffff) < 0xf8000000  
+(037) (066)  1011101xxxxxxxxxxxxxxxxxxxxxxxxx   [7]  
+(038) (067)  1011110xxxxxxxxxxxxxxxxxxxxxxxxx   [7]  
+(039) (068)  1011111xxxxxxxxxxxxxxxxxxxxxxxxx   [7]          
+(040) (069)  1100000xxxxxxxxxxxxxxxxxxxxxxxxx   [7]         
+(041) (070)  1100001xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(042) (071)  1100010xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(043) (072)  1100011xxxxxxxxxxxxxxxxxxxxxxxxx   [7]      
+(044) (073)  1100100xxxxxxxxxxxxxxxxxxxxxxxxx   [7]         
+(045) (074)  1100101xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(046) (075)  1100110xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(047) (076)  1100111xxxxxxxxxxxxxxxxxxxxxxxxx   [7]         
+(048) (077)  1101000xxxxxxxxxxxxxxxxxxxxxxxxx   [7] 
+(049) (078)  1101001xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(050) (079)  1101010xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(051) (080)  1101011xxxxxxxxxxxxxxxxxxxxxxxxx   [7]        
+(052) (081)  1101100xxxxxxxxxxxxxxxxxxxxxxxxx   [7]         
+(053) (082)  1101101xxxxxxxxxxxxxxxxxxxxxxxxx   [7] 
+(054) (083)  1101110xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(055) (084)  1101111xxxxxxxxxxxxxxxxxxxxxxxxx   [7]        
+(056) (085)  1110000xxxxxxxxxxxxxxxxxxxxxxxxx   [7]        
+(057) (086)  1110001xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(058) (087)  1110010xxxxxxxxxxxxxxxxxxxxxxxxx   [7] 
+(059) (089)  1110011xxxxxxxxxxxxxxxxxxxxxxxxx   [7]          
+(060) (106)  1110100xxxxxxxxxxxxxxxxxxxxxxxxx   [7]        
+(061) (107)  1110101xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(062) (113)  1110110xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(063) (118)  1110111xxxxxxxxxxxxxxxxxxxxxxxxx   [7] 
+(064) (119)  1111000xxxxxxxxxxxxxxxxxxxxxxxxx   [7]         
+(065) (120)  1111001xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(066) (121)  1111010xxxxxxxxxxxxxxxxxxxxxxxxx   [7]
+(067) (122)  1111011xxxxxxxxxxxxxxxxxxxxxxxxx   [7]  (0xf6000000 - 0xf7ffffff) < 0xf8000000  
+
+             if (in < 0xfe000000)
+             index: ((in >> 24) & 0x07) + 68;
+(068) (038)  11111000xxxxxxxxxxxxxxxxxxxxxxxx   [8]  (0xf8000000 - 0xf8ffffff) < 0xfe000000  
+(069) (042)  11111001xxxxxxxxxxxxxxxxxxxxxxxx   [8]
+(070) (044)  11111010xxxxxxxxxxxxxxxxxxxxxxxx   [8]
+(071) (059)  11111011xxxxxxxxxxxxxxxxxxxxxxxx   [8]
+(072) (088)  11111100xxxxxxxxxxxxxxxxxxxxxxxx   [8]
+(073) (090)  11111101xxxxxxxxxxxxxxxxxxxxxxxx   [8]  (0xfd000000 - 0xfdffffff) < 0xfe000000
+
+             if (in < 0xff400000)
+             index: ((in >> 22) & 0x07) + 74;
+(074) (033)  1111111000xxxxxxxxxxxxxxxxxxxxxx   [10]  (0xfe000000 - 0xfe3fffff) < 0xff400000
+(075) (034)  1111111001xxxxxxxxxxxxxxxxxxxxxx   [10]
+(076) (040)  1111111010xxxxxxxxxxxxxxxxxxxxxx   [10]
+(077) (041)  1111111011xxxxxxxxxxxxxxxxxxxxxx   [10]
+(078) (063)  1111111100xxxxxxxxxxxxxxxxxxxxxx   [10]  (0xff000000 - 0xff3fffff) < 0xff400000
+
+             if (in < 0xffa00000)
+             index: ((in >> 21) & 0x07) + 77;
+(079) (039)  11111111010xxxxxxxxxxxxxxxxxxxxx   [11]  (0xff400000 - 0xff5fffff) < 0xffa00000
+(080) (043)  11111111011xxxxxxxxxxxxxxxxxxxxx   [11]
+(081) (124)  11111111100xxxxxxxxxxxxxxxxxxxxx   [11]  (0xff800000 - 0xff9fffff) < 0xffa00000
+
+             if (in < 0xffc00000)
+             index: ((in & 0x100000) ? 1 : 0) + 82;
+(082) (035)  111111111010xxxxxxxxxxxxxxxxxxxx   [12]  (0xffa00000 - 0xffafffff) < 0xffc00000
+(083) (062)  111111111011xxxxxxxxxxxxxxxxxxxx   [12]  (0xffb00000 - 0xffbfffff) < 0xffc00000
+
+             if (in < 0xfff00000)
+             index: ((in >> 19) & 0x07) + 84;
+(084) (000)  1111111111000xxxxxxxxxxxxxxxxxxx   [13]  (0xffc00000 - 0xffc7ffff) < 0xfff00000
+(085) (036)  1111111111001xxxxxxxxxxxxxxxxxxx   [13]
+(086) (064)  1111111111010xxxxxxxxxxxxxxxxxxx   [13]
+(087) (091)  1111111111011xxxxxxxxxxxxxxxxxxx   [13]
+(088) (093)  1111111111100xxxxxxxxxxxxxxxxxxx   [13]
+(089) (126)  1111111111101xxxxxxxxxxxxxxxxxxx   [13]  (0xffe80000 - 0xffefffff) < 0xfff00000
+
+             if (in < 0xfff80000)
+             index: ((in & 0x40000) ? 1 : 0) + 90;
+(090) (094)  11111111111100xxxxxxxxxxxxxxxxxx   [14]  (0xfff00000 - 0xfff3ffff) < 0xfff80000
+(091) (125)  11111111111101xxxxxxxxxxxxxxxxxx   [14]  (0xfff40000 - 0xfff7ffff) < 0xfff80000
+
+             if (in < 0xfffe0000)
+             index: ((in >> 17) & 0x03) + 92;
+(092) (060)  111111111111100xxxxxxxxxxxxxxxxx   [15]  (0xfff80000 - 0xfff9ffff) < 0xfffe0000
+(093) (096)  111111111111101xxxxxxxxxxxxxxxxx   [15]
+(094) (123)  111111111111110xxxxxxxxxxxxxxxxx   [15]  (0xfffc0000 - 0xfffdffff) < 0xfffe0000
+
+             if (in < 0xfffe6000)
+             index: ((in >> 13) & 0x03) + 95;
+(095) (092)  1111111111111110000xxxxxxxxxxxxx   [19]  (0xfffe0000 - 0xfffe1fff) < 0xfffe6000
+(096) (195)  1111111111111110001xxxxxxxxxxxxx   [19]
+(097) (208)  1111111111111110010xxxxxxxxxxxxx   [19]  (0xfffe4000 - 0xfffe5fff) < 0xfffe6000
+
+             if (in < 0xfffee000)
+             index: ((in >> 12) & 0x0f) + 92;
+(098) (128)  11111111111111100110xxxxxxxxxxxx   [20]  (0xfffe6000 - 0xfffe6fff) < 0xfffee000
+(099) (130)  11111111111111100111xxxxxxxxxxxx   [20]
+(100) (131)  11111111111111101000xxxxxxxxxxxx   [20]
+(101) (162)  11111111111111101001xxxxxxxxxxxx   [20]
+(102) (184)  11111111111111101010xxxxxxxxxxxx   [20]
+(103) (194)  11111111111111101011xxxxxxxxxxxx   [20]
+(104) (224)  11111111111111101100xxxxxxxxxxxx   [20]
+(105) (226)  11111111111111101101xxxxxxxxxxxx   [20]  (0xfffed000 - 0xfffedfff) < 0xfffee000
+
+             if (in < 0xffff4800)
+             index: ((in >> 11) & 0x3f) + 78;
+(106) (153)  111111111111111011100xxxxxxxxxxx   [21]  (0xfffee000 - 0xfffee7ff) < 0xffff4800   
+(107) (161)  111111111111111011101xxxxxxxxxxx   [21]
+(108) (167)  111111111111111011110xxxxxxxxxxx   [21]
+(109) (172)  111111111111111011111xxxxxxxxxxx   [21]
+(110) (176)  111111111111111100000xxxxxxxxxxx   [21]
+(111) (177)  111111111111111100001xxxxxxxxxxx   [21]
+(112) (179)  111111111111111100010xxxxxxxxxxx   [21]
+(113) (209)  111111111111111100011xxxxxxxxxxx   [21]
+(114) (216)  111111111111111100100xxxxxxxxxxx   [21]
+(115) (217)  111111111111111100101xxxxxxxxxxx   [21]
+(116) (227)  111111111111111100110xxxxxxxxxxx   [21]
+(117) (229)  111111111111111100111xxxxxxxxxxx   [21]
+(118) (230)  111111111111111101000xxxxxxxxxxx   [21]  (0xffff4000 - 0xffff47ff) < 0xffff4800
+
+             if (in < 0xffffb000)
+             index: ((in >> 10) & 0x3f) + 101;
+(119) (129)  1111111111111111010010xxxxxxxxxx   [22]  (0xffff4800 - 0xffff4bff) < 0xffffb000 
+(120) (132)  1111111111111111010011xxxxxxxxxx   [22]
+(121) (133)  1111111111111111010100xxxxxxxxxx   [22]
+(122) (134)  1111111111111111010101xxxxxxxxxx   [22]
+(123) (136)  1111111111111111010110xxxxxxxxxx   [22]
+(124) (146)  1111111111111111010111xxxxxxxxxx   [22]
+(125) (154)  1111111111111111011000xxxxxxxxxx   [22]
+(126) (156)  1111111111111111011001xxxxxxxxxx   [22]
+(127) (160)  1111111111111111011010xxxxxxxxxx   [22]
+(128) (163)  1111111111111111011011xxxxxxxxxx   [22]
+(129) (164)  1111111111111111011100xxxxxxxxxx   [22]
+(130) (169)  1111111111111111011101xxxxxxxxxx   [22]
+(131) (170)  1111111111111111011110xxxxxxxxxx   [22]
+(132) (173)  1111111111111111011111xxxxxxxxxx   [22]
+(133) (178)  1111111111111111100000xxxxxxxxxx   [22]
+(134) (181)  1111111111111111100001xxxxxxxxxx   [22]
+(135) (185)  1111111111111111100010xxxxxxxxxx   [22]
+(136) (186)  1111111111111111100011xxxxxxxxxx   [22]
+(137) (187)  1111111111111111100100xxxxxxxxxx   [22]
+(138) (189)  1111111111111111100101xxxxxxxxxx   [22]
+(139) (190)  1111111111111111100110xxxxxxxxxx   [22]
+(140) (196)  1111111111111111100111xxxxxxxxxx   [22]
+(141) (198)  1111111111111111101000xxxxxxxxxx   [22]
+(142) (228)  1111111111111111101001xxxxxxxxxx   [22]
+(143) (232)  1111111111111111101010xxxxxxxxxx   [22]
+(144) (233)  1111111111111111101011xxxxxxxxxx   [22]  (0xffffac00 - 0xffffafff) < 0xffffb000
+
+             if (in < 0xffffea00)
+             index: ((in >> 9) & 0x3f) + 121;
+(145) (001)  11111111111111111011000xxxxxxxxx   [23]  (0xffffb000 - 0xffffb1ff) < 0xffffea00
+(146) (135)  11111111111111111011001xxxxxxxxx   [23]
+(147) (137)  11111111111111111011010xxxxxxxxx   [23]
+(148) (138)  11111111111111111011011xxxxxxxxx   [23]
+(149) (139)  11111111111111111011100xxxxxxxxx   [23]
+(150) (140)  11111111111111111011101xxxxxxxxx   [23]
+(151) (141)  11111111111111111011110xxxxxxxxx   [23]
+(152) (143)  11111111111111111011111xxxxxxxxx   [23]
+(153) (147)  11111111111111111100000xxxxxxxxx   [23]
+(154) (149)  11111111111111111100001xxxxxxxxx   [23]
+(155) (150)  11111111111111111100010xxxxxxxxx   [23]
+(156) (151)  11111111111111111100011xxxxxxxxx   [23]
+(157) (152)  11111111111111111100100xxxxxxxxx   [23]
+(158) (155)  11111111111111111100101xxxxxxxxx   [23]
+(159) (157)  11111111111111111100110xxxxxxxxx   [23]
+(160) (158)  11111111111111111100111xxxxxxxxx   [23]
+(161) (165)  11111111111111111101000xxxxxxxxx   [23]
+(162) (166)  11111111111111111101001xxxxxxxxx   [23]
+(163) (168)  11111111111111111101010xxxxxxxxx   [23]
+(164) (174)  11111111111111111101011xxxxxxxxx   [23]
+(165) (175)  11111111111111111101100xxxxxxxxx   [23]
+(166) (180)  11111111111111111101101xxxxxxxxx   [23]
+(167) (182)  11111111111111111101110xxxxxxxxx   [23]
+(168) (183)  11111111111111111101111xxxxxxxxx   [23]
+(169) (188)  11111111111111111110000xxxxxxxxx   [23]
+(170) (191)  11111111111111111110001xxxxxxxxx   [23]
+(171) (197)  11111111111111111110010xxxxxxxxx   [23]
+(172) (231)  11111111111111111110011xxxxxxxxx   [23]
+(173) (239)  11111111111111111110100xxxxxxxxx   [23]  (0xffffe800 - 0xffffe9ff) < 0xffffea00
+
+             if (in < 0xfffff600)
+             index: ((in >> 8) & 0x1f) + 164;
+(174) (009)  111111111111111111101010xxxxxxxx   [24]  (0xffffea00 - 0xffffeaff) < 0xfffff600
+(175) (142)  111111111111111111101011xxxxxxxx   [24]
+(176) (144)  111111111111111111101100xxxxxxxx   [24]
+(177) (145)  111111111111111111101101xxxxxxxx   [24]
+(178) (148)  111111111111111111101110xxxxxxxx   [24]
+(179) (159)  111111111111111111101111xxxxxxxx   [24]
+(180) (171)  111111111111111111110000xxxxxxxx   [24]
+(181) (206)  111111111111111111110001xxxxxxxx   [24]
+(182) (215)  111111111111111111110010xxxxxxxx   [24]
+(183) (225)  111111111111111111110011xxxxxxxx   [24]
+(184) (236)  111111111111111111110100xxxxxxxx   [24]
+(185) (237)  111111111111111111110101xxxxxxxx   [24]  (0xfffff500 - 0xfffff5ff) < 0xfffff600
+
+             if (in < 0xfffff800)
+             index: ((in >> 7) & 0x03) + 186;
+(186) (199)  1111111111111111111101100xxxxxxx   [25]  (0xfffff600 - 0xfffff67f) < 0xfffff800
+(187) (207)  1111111111111111111101101xxxxxxx   [25]
+(188) (234)  1111111111111111111101110xxxxxxx   [25]
+(189) (235)  1111111111111111111101111xxxxxxx   [25]  (0xfffff780 - 0xfffff7ff) < 0xfffff800
+
+             if (in < 0xfffffbc0)
+             index: ((in >> 6) & 0x0f) + 190;
+(190) (192)  11111111111111111111100000xxxxxx   [26]  (0xfffff800 - 0xfffff83f) < 0xfffffbc0
+(191) (193)  11111111111111111111100001xxxxxx   [26]
+(192) (200)  11111111111111111111100010xxxxxx   [26]
+(193) (201)  11111111111111111111100011xxxxxx   [26]
+(194) (202)  11111111111111111111100100xxxxxx   [26]
+(195) (205)  11111111111111111111100101xxxxxx   [26]
+(196) (210)  11111111111111111111100110xxxxxx   [26]
+(197) (213)  11111111111111111111100111xxxxxx   [26]
+(198) (218)  11111111111111111111101000xxxxxx   [26]
+(199) (219)  11111111111111111111101001xxxxxx   [26]
+(200) (238)  11111111111111111111101010xxxxxx   [26]
+(201) (240)  11111111111111111111101011xxxxxx   [26]
+(202) (242)  11111111111111111111101100xxxxxx   [26]
+(203) (243)  11111111111111111111101101xxxxxx   [26]
+(204) (255)  11111111111111111111101110xxxxxx   [26]  (0xfffffb80 - 0xfffffbbf) < 0xfffffbc0
+
+             if (in < 0xfffffe20)
+             index: ((in >> 5) & 0x3f) + 175;
+(205) (203)  111111111111111111111011110xxxxx   [27]  (0xfffffbc0 - 0xfffffbdf) < 0xfffffe20
+(206) (204)  111111111111111111111011111xxxxx   [27]
+(207) (211)  111111111111111111111100000xxxxx   [27]
+(208) (212)  111111111111111111111100001xxxxx   [27]
+(209) (214)  111111111111111111111100010xxxxx   [27]
+(210) (221)  111111111111111111111100011xxxxx   [27]
+(211) (222)  111111111111111111111100100xxxxx   [27]
+(212) (223)  111111111111111111111100101xxxxx   [27]
+(213) (241)  111111111111111111111100110xxxxx   [27]
+(214) (244)  111111111111111111111100111xxxxx   [27]
+(215) (245)  111111111111111111111101000xxxxx   [27]
+(216) (246)  111111111111111111111101001xxxxx   [27]
+(217) (247)  111111111111111111111101010xxxxx   [27]
+(218) (248)  111111111111111111111101011xxxxx   [27]
+(219) (250)  111111111111111111111101100xxxxx   [27]
+(220) (251)  111111111111111111111101101xxxxx   [27]
+(221) (252)  111111111111111111111101110xxxxx   [27]
+(222) (253)  111111111111111111111101111xxxxx   [27]
+(223) (254)  111111111111111111111110000xxxxx   [27]  (0xfffffe00 - 0xfffffe1f) < 0xfffffe20
+
+             if (in < 0xfffffff0)
+             index: ((in >> 4) & 0x1f) + 222;
+(224) (002)  1111111111111111111111100010xxxx   [28]  (0xfffffe20 - 0xfffffe2f) < 0xfffffff0
+(225) (003)  1111111111111111111111100011xxxx   [28]
+(226) (004)  1111111111111111111111100100xxxx   [28]
+(227) (005)  1111111111111111111111100101xxxx   [28]
+(228) (006)  1111111111111111111111100110xxxx   [28]
+(229) (007)  1111111111111111111111100111xxxx   [28]
+(230) (008)  1111111111111111111111101000xxxx   [28]
+(231) (011)  1111111111111111111111101001xxxx   [28]
+(232) (012)  1111111111111111111111101010xxxx   [28]
+(233) (014)  1111111111111111111111101011xxxx   [28]
+(234) (015)  1111111111111111111111101100xxxx   [28]
+(235) (016)  1111111111111111111111101101xxxx   [28]
+(236) (017)  1111111111111111111111101110xxxx   [28]
+(237) (018)  1111111111111111111111101111xxxx   [28]
+(238) (019)  1111111111111111111111110000xxxx   [28]
+(239) (020)  1111111111111111111111110001xxxx   [28]
+(240) (021)  1111111111111111111111110010xxxx   [28]
+(241) (023)  1111111111111111111111110011xxxx   [28]
+(242) (024)  1111111111111111111111110100xxxx   [28]
+(243) (025)  1111111111111111111111110101xxxx   [28]
+(244) (026)  1111111111111111111111110110xxxx   [28]
+(245) (027)  1111111111111111111111110111xxxx   [28]
+(246) (028)  1111111111111111111111111000xxxx   [28]
+(247) (029)  1111111111111111111111111001xxxx   [28]
+(248) (030)  1111111111111111111111111010xxxx   [28]
+(249) (031)  1111111111111111111111111011xxxx   [28]
+(250) (127)  1111111111111111111111111100xxxx   [28]
+(251) (220)  1111111111111111111111111101xxxx   [28]
+(252) (249)  1111111111111111111111111110xxxx   [28]  (0xffffffe0 - 0xffffffef) < 0xfffffff0
+
+             if (in < 0xfffffffc)
+             index: ((in >> 2) & 0x03) + 253;
+(253) (010)  111111111111111111111111111100xx   [30]  (0xfffffff0 - 0xfffffff3) < 0xfffffffc
+(254) (013)  111111111111111111111111111101xx   [30]  (0xfffffff4 - 0xfffffff7) < 0xfffffffc
+(255) (022)  111111111111111111111111111110xx   [30]  (0xfffffff8 - 0xfffffffb) < 0xfffffffc
