@@ -71,8 +71,8 @@ int main(int count, char *strings[])
     struct timeval time1;
     char s[4096], s1[64], s2[64];
     string str;
-    str.reserve(1024);
-    buf.reserve(1024);
+    str.reserve(256);
+    buf.reserve(512);
 
     while (true)
     {
@@ -83,17 +83,19 @@ int main(int count, char *strings[])
         //--------------------------------------------------------------
         fprintf(stdout, "input string size %d bytes\n", (int)strlen(s));
     gettimeofday(&time1, NULL);
-        huff.encode(s, buf);
+        int encode_len = huff.encode(s, buf);
     get_time(&time1, s1, sizeof(s1));
         fprintf(stdout, "output size=%d\n", buf.size());
-        hex_print_stderr("encode", buf.ptr(), buf.size());
+        if (encode_len > 0)
+            hex_print_stderr("encode", buf.ptr(), encode_len);
 
     gettimeofday(&time1, NULL);
-        int ret = huff.decode(buf.ptr(), buf.size(), str);
+        int decode_len = huff.decode(buf.ptr(), buf.size(), str);
     get_time(&time1, s2, sizeof(s2));
 
-        fprintf(stdout, "decode:\n [%s], ret=%d\n", str.c_str(), ret);
-        fprintf(stdout, " [%s]\n", s);
+        fprintf(stdout, " encode_len=%d\n [%s]\n", encode_len, s);
+        fprintf(stdout, " [%s]\n decode_len=%d\n", str.c_str(), decode_len);
+
         hex_print_stderr("decode hex", str.c_str(), str.size());
         
         fprintf(stdout, "encose time: %s\n", s1);
