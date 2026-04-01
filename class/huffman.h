@@ -2,7 +2,7 @@
 #define HUFFMAN_H_
 
 #include <iostream>
-#include "../bytes_array.h"
+#include "bytes_array.h"
 //======================================================================
 const unsigned int huffman_decode_table[] = {
      48,

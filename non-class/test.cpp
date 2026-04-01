@@ -1,10 +1,8 @@
-#include <iostream>
-#include <cstring>
-#include <sys/time.h>
-
-#include "../huffman.h"
+#include "main.h"
 
 using namespace std;
+//======================================================================
+const unsigned int array_reserve = 64;
 //======================================================================
 void std_in(char *s, int len)
 {
@@ -66,12 +64,11 @@ void hex_print_stderr(const char *s, const void *p, int n)
 //======================================================================
 int main(int count, char *strings[])
 {
-    HuffmanCode huff;
     ByteArray buf;
     struct timeval time1;
     char s[4096], s1[64], s2[64];
     string str;
-    str.reserve(256);
+    str.reserve(512);
     buf.reserve(512);
 
     while (true)
@@ -83,14 +80,14 @@ int main(int count, char *strings[])
         //--------------------------------------------------------------
         fprintf(stdout, "input string size %d bytes\n", (int)strlen(s));
     gettimeofday(&time1, NULL);
-        int encode_len = huff.encode(s, buf);
+        int encode_len = huffman_encode(s, buf);
     get_time(&time1, s1, sizeof(s1));
-        fprintf(stdout, "output size=%d\n", buf.size());
+        fprintf(stdout, "output size=%d, encode_len=%d\n", buf.size(), encode_len);
         if (encode_len > 0)
             hex_print_stderr("encode", buf.ptr(), encode_len);
 
     gettimeofday(&time1, NULL);
-        int decode_len = huff.decode(buf.ptr(), buf.size(), str);
+        int decode_len = huffman_decode(buf.ptr(), buf.size(), str);
     get_time(&time1, s2, sizeof(s2));
 
         fprintf(stdout, " encode_len=%d\n [%s]\n", encode_len, s);
@@ -106,5 +103,4 @@ int main(int count, char *strings[])
 }
 
 //  Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
-//  現代標準漢語   (Chinese)
-//  У Вас продается славянский шкаф?   (Russian)
+//  現代標準漢語 (Chinese)   У Вас продается славянский шкаф? (Russian)

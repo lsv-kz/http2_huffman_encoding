@@ -1,5 +1,5 @@
-#include <iostream>
-#include "../bytes_array.h"
+#include "main.h"
+
 //======================================================================
 const unsigned int huffman_decode_table[] = {
      48,
