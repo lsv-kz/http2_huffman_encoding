@@ -73,7 +73,7 @@ int main(int count, char *strings[])
     struct timeval time1;
     char s[4096], s1[64], s2[64];
     string str;
-    str.reserve(256);
+    str.reserve(512);
     buf.reserve(512);
 
     while (true)
